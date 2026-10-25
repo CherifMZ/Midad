@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="مداد: أبيات وأقوال أعود إليها، وأخرى أكتبها.">
+<meta name="color-scheme" content="light dark">
+<title>مداد</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Aref+Ruqaa&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+:root{
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  --paper:#edebe4;
+  --paper-2:#e2dfd6;
+  --ink:#1c1e2b;
+  --ink-soft:#565968;
+  --ink-faint:#9a9ca6;
+  --accent:#35478c;
+  --line:rgba(28,30,43,.14);
+  --grain:.06;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#121628; --paper-2:#1a1f36; --ink:#e7e2d4; --ink-soft:#b3afa2; --ink-faint:#6b6f85;
+    --accent:#c8a85c; --line:rgba(231,226,212,.14); --grain:.09;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#121628; --paper-2:#1a1f36; --ink:#e7e2d4; --ink-soft:#b3afa2; --ink-faint:#6b6f85;
+  --accent:#c8a85c; --line:rgba(231,226,212,.14); --grain:.09;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{height:100%;overflow:hidden;scroll-padding-top:env(safe-area-inset-top,0px);-webkit-text-size-adjust:100%}
+body{
+  margin:0;height:100%;overflow-y:auto;overflow-x:hidden;
+  background:var(--paper);color:var(--ink);
+  scroll-snap-type:y proximity;scroll-behavior:smooth;
+  font-family:'Amiri','Noto Naskh Arabic','Scheherazade New',serif;
+  -webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent;
+  scrollbar-width:none;
+}
+body::-webkit-scrollbar{display:none}
+html[lang="en"] body{font-family:'Cormorant Garamond',Georgia,'Times New Roman',serif}
+body.locked{overflow:hidden}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+button:focus-visible,a:focus-visible{outline:1px solid var(--accent);outline-offset:4px}
+
+/* paper grain */
+.grain{position:fixed;inset:0;z-index:6;pointer-events:none;opacity:var(--grain);background-size:180px 180px;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+/* header */
+.top{position:fixed;top:0;inset-inline:0;z-index:10;display:flex;align-items:center;justify-content:space-between;
+  padding:calc(14px + env(safe-area-inset-top,0px)) clamp(18px,4vw,44px) 18px;
+  background:linear-gradient(var(--paper) 35%,transparent);pointer-events:none}
+.top>*{pointer-events:auto}
+.brand{font-family:'Aref Ruqaa','Amiri',serif;font-size:1.5rem;line-height:1;color:var(--ink);text-decoration:none;opacity:0;transition:opacity .6s}
+html[lang="en"] .brand{font-family:'Cormorant Garamond',Georgia,serif;font-weight:500;letter-spacing:.05em;font-size:1.3rem}
+body.away .brand{opacity:1}
+.nav{display:flex;gap:clamp(16px,3.5vw,30px)}
+.tx{font-size:1.02rem;color:var(--ink-soft);position:relative;padding:.3em 0;transition:color .3s;line-height:1.3}
+.tx::after{content:'';position:absolute;inset-inline:0;bottom:0;height:1px;background:var(--accent);transform:scaleX(0);transition:transform .35s cubic-bezier(.2,.7,.2,1)}
+.tx:hover{color:var(--ink)}
+.tx:hover::after{transform:scaleX(1)}
+html[lang="en"] .tx{letter-spacing:.03em}
+
+/* progress thread */
+.thread{position:fixed;inset-inline-end:clamp(12px,3vw,36px);top:50%;transform:translateY(-50%);height:26vh;width:1px;background:var(--line);z-index:8;opacity:0;transition:opacity .6s}
+body.away .thread{opacity:1}
+.thread i{position:absolute;left:-3px;top:0;width:7px;height:7px;border-radius:50%;background:var(--accent);transform:translateY(-50%);transition:top .3s cubic-bezier(.2,.7,.2,1)}
+.thread b{position:absolute;top:calc(100% + 14px);left:50%;transform:translateX(-50%);font-weight:400;font-size:.85rem;color:var(--ink-faint);white-space:nowrap}
+
+/* one piece per screen */
+.leaf{position:relative;min-height:100%;scroll-snap-align:start;display:grid;place-items:center;isolation:isolate;
+  padding:calc(15vh + env(safe-area-inset-top,0px)) clamp(22px,8vw,140px) 15vh}
+.leaf::before{content:'';position:absolute;inset:0;z-index:-1;opacity:0;transition:opacity 1.6s ease;
+  background:radial-gradient(60% 48% at 50% 44%,var(--paper-2),transparent 72%)}
+.leaf.in::before{opacity:1}
+.piece{width:min(760px,100%);text-align:center}
+.text{margin:0;font-size:clamp(1.55rem,1rem + 2.3vw,2.4rem);line-height:2.05;color:var(--ink)}
+html[lang="en"] .text{font-size:clamp(1.6rem,1.05rem + 2.3vw,2.55rem);line-height:1.5;font-weight:400}
+html[lang="en"] .piece.ar{direction:rtl;font-family:'Amiri','Noto Naskh Arabic','Scheherazade New',serif}
+html[lang="en"] .piece.ar .text{font-size:clamp(1.55rem,1rem + 2.3vw,2.4rem);line-height:2.05}
+.bayt{display:flex;flex-wrap:wrap;justify-content:center;column-gap:2.6em}
+.half,.prose{display:block;max-width:100%}
+.prose{max-width:34ch;margin-inline:auto}
+.line{opacity:0;filter:blur(9px);transition:opacity 1.1s ease,filter 1.3s ease;transition-delay:calc(.15s + var(--i)*.17s)}
+.in .line{opacity:1;filter:blur(0)}
+.orn{display:block;margin:1.7rem auto 1.1rem;width:112px;height:18px;color:var(--accent);opacity:.9}
+.orn .s{stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 1.7s cubic-bezier(.4,0,.2,1) .8s}
+.in .orn .s{stroke-dashoffset:0}
+.orn .d{opacity:0;transition:opacity .6s ease 1.7s}
+.in .orn .d{opacity:1}
+.by{margin:0;color:var(--ink-soft);opacity:0;transition:opacity 1s ease 1.2s;font-size:1.05rem;line-height:1.7}
+.in .by{opacity:1}
+.by .author{display:block}
+.by .src{display:block;font-size:.9rem;color:var(--ink-faint)}
+.copy{margin-top:1.5rem;font-size:.9rem;color:var(--ink-faint);opacity:0;transition:opacity .8s ease 1.6s,color .3s}
+.in .copy{opacity:1}
+.copy:hover{color:var(--accent)}
+
+/* opening */
+.hero .piece{position:relative}
+.blot{position:absolute;width:min(72vw,440px);height:auto;left:50%;top:50%;z-index:-1;color:var(--accent);opacity:.09;
+  transform:translate(-50%,-56%);animation:breathe 18s ease-in-out infinite alternate}
+@keyframes breathe{from{transform:translate(-50%,-56%) rotate(-6deg) scale(.95)}to{transform:translate(-50%,-52%) rotate(8deg) scale(1.06)}}
+.name{margin:0;font-family:'Aref Ruqaa','Amiri',serif;font-weight:400;font-size:clamp(4.4rem,15vw,9.5rem);line-height:1.15;color:var(--ink)}
+html[lang="en"] .name{font-family:'Cormorant Garamond',Georgia,serif;font-weight:500;letter-spacing:.04em;font-size:clamp(3.8rem,13vw,8.5rem)}
+.name span{display:inline-block;clip-path:inset(-25% 0 -25% 100%);animation:wipe 1.7s cubic-bezier(.7,0,.2,1) .25s forwards}
+html[lang="en"] .name span{clip-path:inset(-25% 100% -25% 0);animation-name:wipeL}
+@keyframes wipe{to{clip-path:inset(-25% 0 -25% 0)}}
+@keyframes wipeL{to{clip-path:inset(-25% 0 -25% 0)}}
+.tagline{margin:.5rem 0 0;font-size:clamp(1.15rem,1rem + .7vw,1.5rem);color:var(--ink-soft);opacity:0;animation:up 1.2s ease 1.3s forwards}
+.intro{margin:1.5rem auto 0;max-width:34ch;font-size:1.08rem;line-height:1.8;color:var(--ink-faint);opacity:0;animation:up 1.2s ease 1.7s forwards}
+@keyframes up{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hint{position:absolute;left:50%;bottom:calc(6vh + env(safe-area-inset-bottom,0px));transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:10px;font-size:.9rem;color:var(--ink-faint);opacity:0;animation:up 1.2s ease 2.3s forwards;white-space:nowrap}
+.hint i{width:1px;height:44px;background:var(--line);position:relative;overflow:hidden}
+.hint i::after{content:'';position:absolute;inset:0;background:var(--accent);transform:translateY(-100%);animation:drip 2.4s cubic-bezier(.6,0,.2,1) infinite}
+@keyframes drip{to{transform:translateY(100%)}}
+
+/* closing */
+.end .text{font-size:clamp(1.35rem,1rem + 1.7vw,2.1rem)}
+.end .actions{display:flex;justify-content:center;gap:2.4em;margin-top:2.2rem;opacity:0;transition:opacity 1s ease 1s}
+.end.in .actions{opacity:1}
+
+/* index */
+.index{position:fixed;inset:0;z-index:20;background:var(--paper);overflow-y:auto;
+  padding:calc(80px + env(safe-area-inset-top,0px)) clamp(22px,8vw,140px) calc(48px + env(safe-area-inset-bottom,0px));
+  opacity:0;visibility:hidden;transition:opacity .5s ease,visibility .5s}
+.index.open{opacity:1;visibility:visible}
+.index-in{width:min(620px,100%);margin:0 auto}
+.index-title{margin:0 0 1.4rem;font-family:'Aref Ruqaa','Amiri',serif;font-size:2.4rem;line-height:1.2;color:var(--ink)}
+html[lang="en"] .index-title{font-family:'Cormorant Garamond',Georgia,serif;font-weight:500}
+.toc{list-style:none;margin:0;padding:0}
+.toc li{opacity:0}
+.index.open .toc li{animation:up .6s ease both;animation-delay:min(calc(.15s + var(--i)*.06s),1.2s)}
+.toc button{width:100%;display:grid;grid-template-columns:2.2em minmax(0,1fr) auto;align-items:baseline;gap:.9em;
+  padding:.75em 0;text-align:start;color:var(--ink);transition:color .3s}
+.toc button:hover{color:var(--accent)}
+.toc .n{color:var(--accent);font-size:1rem}
+.toc .t{font-size:1.25rem;line-height:1.6;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.toc .a{color:var(--ink-faint);font-size:.95rem;white-space:nowrap}
+.index .close{position:fixed;top:calc(14px + env(safe-area-inset-top,0px));inset-inline-end:clamp(18px,4vw,44px)}
+
+/* toast */
+.toast{position:fixed;left:50%;bottom:calc(28px + env(safe-area-inset-bottom,0px));transform:translate(-50%,10px);z-index:30;
+  background:var(--ink);color:var(--paper);font-size:.95rem;padding:.5em 1.2em;border-radius:999px;opacity:0;transition:opacity .35s,transform .35s;pointer-events:none}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+
+noscript p{padding:20vh 8vw;text-align:center;font-size:1.3rem}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-delay:0s!important;transition-duration:.01ms!important;transition-delay:0s!important}
+  body{scroll-behavior:auto}
+  .line,.by,.copy,.tagline,.intro,.hint,.end .actions{opacity:1;filter:none;transform:none}
+  .hint{transform:translateX(-50%)}
+  .name span{clip-path:none}
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <a class="brand" href="#top" id="brand" data-i18n="name">مداد</a>
+  <nav class="nav">
+    <button class="tx" type="button" id="shuffleBtn" data-i18n="shuffle">قُرعة</button>
+    <button class="tx" type="button" id="indexBtn" data-i18n="index">الفهرس</button>
+    <button class="tx" type="button" id="langBtn" data-i18n="lang">English</button>
+  </nav>
+</header>
+
+<div class="thread" aria-hidden="true"><i id="dot"></i><b id="counter"></b></div>
+
+<section class="leaf hero" id="top">
+  <div class="piece">
+    <svg class="blot" viewBox="0 0 400 400" aria-hidden="true">
+      <path fill="currentColor" d="M214 36c56 4 108 40 132 92 26 56 14 124-24 170-40 48-108 70-168 52C92 332 44 276 36 212 28 150 58 88 110 58c32-18 68-26 104-22z"/>
+    </svg>
+    <h1 class="name" id="name"><span>مداد</span></h1>
+    <p class="tagline" data-i18n="tagline">ما يبقى من الحبر</p>
+    <p class="intro" data-i18n="intro">أبياتٌ وأقوالٌ أعودُ إليها، وأخرى أكتبُها.</p>
+  </div>
+  <div class="hint"><span data-i18n="hint">انزل للقراءة</span><i></i></div>
+</section>
+
+<div id="pieces"></div>
+
+<section class="leaf end" id="end">
+  <div class="piece">
+    <p class="text"><span class="prose line" style="--i:0" data-i18n="end">انتهت الصفحات، ولم ينتهِ الحبر.</span></p>
+    <div class="actions">
+      <button class="tx" type="button" id="backBtn" data-i18n="back">إلى البداية</button>
+      <button class="tx" type="button" id="indexBtn2" data-i18n="index">الفهرس</button>
+    </div>
+  </div>
+</section>
+
+<div class="index" id="index" aria-hidden="true">
+  <button class="close tx" type="button" id="closeBtn" data-i18n="close">إغلاق</button>
+  <div class="index-in">
+    <p class="index-title" data-i18n="index">الفهرس</p>
+    <ol class="toc" id="toc"></ol>
+  </div>
+</div>
+
+<div class="grain" aria-hidden="true"></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<template id="orn-tpl">
+  <svg class="orn" viewBox="0 0 120 20" aria-hidden="true">
+    <path class="s" pathLength="1" d="M2 10 C22 10 30 3 44 3 S62 17 76 17 S98 10 118 10" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+    <path class="d" d="M60 4l5.5 6-5.5 6-5.5-6z" fill="currentColor"/>
+  </svg>
+</template>
+
+<noscript><p>هذه الصفحة تحتاج إلى تشغيل JavaScript لعرض النصوص.</p></noscript>
+
+<script src="pieces.js"></script>
+<script>
+(function () {
+  /* ---------- interface strings ---------- */
+  var UI = {
+    ar: {
+      name: 'مداد',
+      tagline: 'ما يبقى من الحبر',
+      intro: 'أبياتٌ وأقوالٌ أعودُ إليها، وأخرى أكتبُها.',
+      hint: 'انزل للقراءة',
+      lang: 'English',
+      index: 'الفهرس',
+      shuffle: 'قُرعة',
+      copy: 'نسخ',
+      copied: 'نُسخ النص',
+      copyFail: 'تعذّر النسخ',
+      close: 'إغلاق',
+      end: 'انتهت الصفحات، ولم ينتهِ الحبر.',
+      back: 'إلى البداية'
+    },
+    en: {
+      name: 'Midad',
+      tagline: 'What the ink leaves behind',
+      intro: 'Verses and sayings I return to, and others I write.',
+      hint: 'Scroll to read',
+      lang: 'العربية',
+      index: 'Index',
+      shuffle: 'At random',
+      copy: 'Copy',
+      copied: 'Copied',
+      copyFail: 'Could not copy',
+      close: 'Close',
+      end: 'The pages end. The ink does not.',
+      back: 'Back to the start'
+    }
+  };
+
+  /* ---------- content lives in pieces.js ---------- */
+  var PIECES = (window.PIECES && window.PIECES.length) ? window.PIECES : [];
+
+  /* ---------- state ---------- */
+  var lang = 'ar';
+  try { var saved = localStorage.getItem('midad-lang'); if (saved === 'en' || saved === 'ar') lang = saved; } catch (e) {}
+
+  var body = document.body;
+  var pieces = document.getElementById('pieces');
+  var index = document.getElementById('index');
+  var toc = document.getElementById('toc');
+  var dot = document.getElementById('dot');
+  var counter = document.getElementById('counter');
+  var toast = document.getElementById('toast');
+  var ornTpl = document.getElementById('orn-tpl');
+  var leaves = [], current = 0, observer = null, toastTimer = null;
+
+  function num(n) {
+    return lang === 'ar' ? String(n).replace(/\d/g, function (d) { return '٠١٢٣٤٥٦٧٨٩'[d]; }) : String(n);
+  }
+  function el(tag, cls, text) {
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text != null) e.textContent = text;
+    return e;
+  }
+  function firstLine(d) { var l = d.lines[0]; return Array.isArray(l) ? l[0] : l; }
+  function plainText(p) {
+    var d = p[lang] || p.ar;
+    var sep = lang === 'ar' ? '   ' : '  /  ';
+    var out = d.lines.map(function (l) { return Array.isArray(l) ? l.join(sep) : l; }).join('\n');
+    if (d.author) out += '\n' + d.author;
+    return out;
+  }
+
+  /* ---------- build ---------- */
+  function buildPiece(p, i) {
+    var d = p[lang] || p.ar, t = UI[lang];
+    var s = el('section', 'leaf'); s.id = 'p' + (i + 1);
+    var box = el('div', 'piece' + (p[lang] ? '' : ' ar'));
+    var text = el('div', 'text');
+    var li = 0;
+    d.lines.forEach(function (l) {
+      if (Array.isArray(l)) {
+        var b = el('div', 'bayt');
+        l.forEach(function (h) {
+          var sp = el('span', 'half line', h);
+          sp.style.setProperty('--i', li++);
+          b.appendChild(sp);
+        });
+        text.appendChild(b);
+      } else {
+        var sp2 = el('span', 'prose line', l);
+        sp2.style.setProperty('--i', li++);
+        text.appendChild(sp2);
+      }
+    });
+    var by = el('p', 'by');
+    if (d.author) by.appendChild(el('span', 'author', d.author));
+    if (d.source) by.appendChild(el('span', 'src', d.source));
+    var copy = el('button', 'copy', t.copy); copy.type = 'button';
+    copy.addEventListener('click', function () { copyText(plainText(p)); });
+    box.appendChild(text);
+    box.appendChild(ornTpl.content.cloneNode(true));
+    box.appendChild(by);
+    box.appendChild(copy);
+    s.appendChild(box);
+    return s;
+  }
+
+  function buildIndex() {
+    toc.innerHTML = '';
+    PIECES.forEach(function (p, i) {
+      var li = el('li'); li.style.setProperty('--i', i);
+      var b = el('button'); b.type = 'button';
+      var d = p[lang] || p.ar;
+      b.appendChild(el('span', 'n', num(i + 1)));
+      var t = el('span', 't', firstLine(d));
+      if (!p[lang]) t.dir = 'rtl';
+      b.appendChild(t);
+      b.appendChild(el('span', 'a', d.author || ''));
+      b.addEventListener('click', function () {
+        closeIndex();
+        setTimeout(function () { go(i + 1); }, 60);
+      });
+      li.appendChild(b);
+      toc.appendChild(li);
+    });
+  }
+
+  function render() {
+    var t = UI[lang];
+    document.documentElement.lang = lang;
+    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+    document.title = t.name;
+    var nodes = document.querySelectorAll('[data-i18n]');
+    for (var k = 0; k < nodes.length; k++) nodes[k].textContent = t[nodes[k].getAttribute('data-i18n')];
+    var nameEl = document.getElementById('name');
+    nameEl.innerHTML = '';
+    nameEl.appendChild(el('span', null, t.name));
+    pieces.innerHTML = '';
+    PIECES.forEach(function (p, i) { pieces.appendChild(buildPiece(p, i)); });
+    leaves = Array.prototype.slice.call(document.querySelectorAll('.leaf'));
+    buildIndex();
+    watch();
+    updateCounter();
+  }
+
+  /* ---------- reveal on scroll ---------- */
+  function watch() {
+    if (observer) observer.disconnect();
+    observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) {
+          en.target.classList.add('in');
+          current = leaves.indexOf(en.target);
+          updateCounter();
+          body.classList.toggle('away', current > 0);
+        }
+      });
+    }, { root: body, threshold: 0.4 });
+    leaves.forEach(function (l) { observer.observe(l); });
+  }
+
+  function updateCounter() {
+    var n = Math.min(Math.max(current, 1), PIECES.length);
+    counter.textContent = num(n) + ' / ' + num(PIECES.length);
+  }
+
+  /* ---------- navigation ---------- */
+  function go(i) {
+    i = Math.max(0, Math.min(leaves.length - 1, i));
+    if (Math.abs(i - current) > 3) { jump(i); return; }
+    leaves[i].scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  function jump(i) {
+    body.style.scrollBehavior = 'auto';
+    leaves[i].scrollIntoView({ block: 'start' });
+    requestAnimationFrame(function () { body.style.scrollBehavior = ''; });
+  }
+  function shuffle() {
+    if (PIECES.length < 2) return;
+    var i;
+    do { i = 1 + Math.floor(Math.random() * PIECES.length); } while (i === current);
+    go(i);
+  }
+  function openIndex() {
+    index.classList.add('open');
+    index.setAttribute('aria-hidden', 'false');
+    body.classList.add('locked');
+  }
+  function closeIndex() {
+    index.classList.remove('open');
+    index.setAttribute('aria-hidden', 'true');
+    body.classList.remove('locked');
+  }
+  function setLang(l) {
+    lang = l;
+    try { localStorage.setItem('midad-lang', l); } catch (e) {}
+    var keep = current;
+    render();
+    if (leaves[keep]) { jump(keep); leaves[keep].classList.add('in'); }
+  }
+
+  /* ---------- copy ---------- */
+  function showToast(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { toast.classList.remove('show'); }, 1600);
+  }
+  function copyText(s) {
+    var t = UI[lang];
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(s).then(function () { showToast(t.copied); }, function () { showToast(t.copyFail); });
+      } else {
+        showToast(t.copyFail);
+      }
+    } catch (e) { showToast(t.copyFail); }
+  }
+
+  /* ---------- wiring ---------- */
+  document.getElementById('langBtn').addEventListener('click', function () { setLang(lang === 'ar' ? 'en' : 'ar'); });
+  document.getElementById('indexBtn').addEventListener('click', openIndex);
+  document.getElementById('indexBtn2').addEventListener('click', openIndex);
+  document.getElementById('closeBtn').addEventListener('click', closeIndex);
+  document.getElementById('shuffleBtn').addEventListener('click', shuffle);
+  document.getElementById('backBtn').addEventListener('click', function () { go(0); });
+  document.getElementById('brand').addEventListener('click', function (e) { e.preventDefault(); go(0); });
+
+  body.addEventListener('scroll', function () {
+    var max = body.scrollHeight - body.clientHeight;
+    var p = max > 0 ? body.scrollTop / max : 0;
+    dot.style.top = (p * 100) + '%';
+  }, { passive: true });
+
+  document.addEventListener('keydown', function (e) {
+    if (index.classList.contains('open')) { if (e.key === 'Escape') closeIndex(); return; }
+    if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') { e.preventDefault(); go(current + 1); }
+    else if (e.key === 'ArrowUp' || e.key === 'PageUp') { e.preventDefault(); go(current - 1); }
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>
