@@ -9,24 +9,24 @@
           prose goes in as one string per paragraph.
    author / source: shown under the text; leave source empty to hide it. */
 window.PIECES = [
-  {
-    kind: 'verse',
-    shelf: 'shadharat',
-    ar: {
-      lines: [
-        ['على قدرِ أهلِ العزمِ تأتي العزائمُ', 'وتأتي على قدرِ الكرامِ المكارمُ'],
-        ['وتعظُمُ في عينِ الصغيرِ صغارُها', 'وتصغُرُ في عينِ العظيمِ العظائمُ']
-      ],
-      author: 'المتنبي', source: 'الديوان'
-    },
-    en: {
-      lines: [
-        ['Resolve arrives in the measure of the resolute,', 'and noble deeds in the measure of the noble.'],
-        ["Small things loom large in a small man's eye,", 'and great things shrink in the eye of the great.']
-      ],
-      author: 'Al-Mutanabbi', source: 'The Diwan'
-    }
-  },
+  // {
+  //   kind: 'verse',
+  //   shelf: 'shadharat',
+  //   ar: {
+  //     lines: [
+  //       ['على قدرِ أهلِ العزمِ تأتي العزائمُ', 'وتأتي على قدرِ الكرامِ المكارمُ'],
+  //       ['وتعظُمُ في عينِ الصغيرِ صغارُها', 'وتصغُرُ في عينِ العظيمِ العظائمُ']
+  //     ],
+  //     author: 'المتنبي', source: 'الديوان'
+  //   },
+  //   en: {
+  //     lines: [
+  //       ['Resolve arrives in the measure of the resolute,', 'and noble deeds in the measure of the noble.'],
+  //       ["Small things loom large in a small man's eye,", 'and great things shrink in the eye of the great.']
+  //     ],
+  //     author: 'Al-Mutanabbi', source: 'The Diwan'
+  //   }
+  // },
   {
     kind: 'saying',
     shelf: 'shadharat',
