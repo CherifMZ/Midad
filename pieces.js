@@ -1,15 +1,17 @@
 /* مداد · Midad · the content of the site.
    This is the only file to edit when adding a piece.
-   Order here is the order on the site; new pieces go wherever you want them to appear. */
+   The shelf sets its section; order here is preserved within each shelf. */
 
 /* ---------- the pieces ----------
    kind: 'verse' | 'saying' | 'own'
+   shelf: 'shadharat' | 'bawh'
    lines: verse goes in as pairs [first hemistich, second hemistich];
           prose goes in as one string per paragraph.
    author / source: shown under the text; leave source empty to hide it. */
 window.PIECES = [
   {
     kind: 'verse',
+    shelf: 'shadharat',
     ar: {
       lines: [
         ['على قدرِ أهلِ العزمِ تأتي العزائمُ', 'وتأتي على قدرِ الكرامِ المكارمُ'],
@@ -27,11 +29,13 @@ window.PIECES = [
   },
   {
     kind: 'saying',
+    shelf: 'shadharat',
     ar: { lines: ['قيمةُ كلِّ امرئٍ ما يُحسِنُه.'], author: 'علي بن أبي طالب', source: 'نهج البلاغة' },
     en: { lines: ["A man's worth is what he does well."], author: 'Ali ibn Abi Talib', source: 'Nahj al-Balagha' }
   },
   {
     kind: 'verse',
+    shelf: 'shadharat',
     ar: {
       lines: [
         ['أراكَ عصيَّ الدمعِ شيمتُكَ الصبرُ', 'أما للهوى نهيٌ عليكَ ولا أمرُ'],
@@ -50,11 +54,13 @@ window.PIECES = [
   {
     /* PLACEHOLDER: replace with your own writing */
     kind: 'own',
+    shelf: 'bawh',
     ar: { lines: ['الحبرُ لا يجفُّ ما دامَ في القلبِ ما لم يُقَلْ.'], author: 'من دفتري', source: '' },
     en: { lines: ['Ink does not dry while the heart still holds what was never said.'], author: 'From my notebook', source: '' }
   },
   {
     kind: 'verse',
+    shelf: 'shadharat',
     ar: {
       lines: [
         ['قِفا نَبكِ من ذِكرى حبيبٍ ومنزلِ', 'بِسِقطِ اللِّوى بينَ الدَّخولِ فحَومَلِ'],
@@ -72,6 +78,7 @@ window.PIECES = [
   },
   {
     kind: 'verse',
+    shelf: 'shadharat',
     ar: {
       lines: [['وإنّي وإن كنتُ الأخيرَ زمانُهُ', 'لآتٍ بما لم تستطعْهُ الأوائلُ']],
       author: 'أبو العلاء المعرّي', source: 'سقط الزند'
@@ -84,7 +91,26 @@ window.PIECES = [
   {
     /* PLACEHOLDER: replace with your own writing */
     kind: 'own',
+    shelf: 'bawh',
     ar: { lines: ['كلُّ قصيدةٍ رسالةٌ إلى غائبٍ لا يقرأ.'], author: 'من دفتري', source: '' },
     en: { lines: ['Every poem is a letter to someone absent, who does not read.'], author: 'From my notebook', source: '' }
+  }
+];
+
+window.SECTIONS = [
+  {
+    id: 'shadharat',
+    ar: { title: 'شَذَرَات', subtitle: 'قصاصات', description: 'قصائد وأقوال وشذرات تستحق أن تبقى.' },
+    en: { title: 'Fragments', subtitle: 'Shadharat', description: 'Poems, sayings, and fragments worth keeping.' }
+  },
+  {
+    id: 'hamish',
+    ar: { title: 'هَامِش', subtitle: 'على جانب النص', description: 'مساحةٌ إلى جانب النص، لما يتركه فينا.' },
+    en: { title: 'The margin', subtitle: 'Hamish', description: 'A space beside the text for what it leaves with us.' }
+  },
+  {
+    id: 'bawh',
+    ar: { title: 'بَوْح', subtitle: 'تخفّف', description: 'كتابةٌ تقترب من الذات.' },
+    en: { title: 'Unburdening', subtitle: 'Bawh', description: 'Writing that comes closer to the self.' }
   }
 ];
